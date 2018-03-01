@@ -8,11 +8,20 @@
 
 import UIKit
 
-class CartTableViewController: UITableViewController {
+class CartTableViewController: ProductsTableViewController {
+    
+    var isGrocerySection = false
+    var isGardenSection = false
+    var isMovieSection = false
+
+    var titleOfSections = ["Grocery", "Garden", "Movies"]
+    var numberOfRows = [0, 0, 0]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title =  "Cart"
+        
+        print("\(groceryArray[0].amountOfProduct)")
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -26,14 +35,56 @@ class CartTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+//    func checkNumberOfItems(array: [Product]) -> Int {
+//        var count = 0
+//        var i = 0
+//        while i < array.count {
+//            if array[i].amountOfProduct > 0 {
+//                count = count + 1
+//            }
+//            i = i + 1
+//        }
+//        return count
+//    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
+//        var sections = 0
+//        if checkNumberOfItems(array: groceryArray) > 0{
+//            sections = sections + 1
+//            isGrocerySection = true
+//        } else {
+//            isGrocerySection = false
+//        }
+//        if checkNumberOfItems(array: gardenArray) > 0{
+//            sections = sections + 1
+//            isGardenSection = true
+//        } else {
+//            isGardenSection = false
+//        }
+//        if checkNumberOfItems(array: movieArray) > 0{
+//            sections = sections + 1
+//            isMovieSection = true
+//        } else {
+//            isMovieSection = false
+//        }
+//
+//        return sections
         return 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+//        if isGrocerySection == true {
+//            numberOfRows[0] = checkNumberOfItems(array: groceryArray)
+//        }
+//        if isGardenSection == true {
+//            numberOfRows[1] = checkNumberOfItems(array: gardenArray)
+//        }
+//        if isMovieSection == true {
+//            numberOfRows[2] = checkNumberOfItems(array: movieArray)
+//        }
+
         return 0
     }
 

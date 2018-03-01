@@ -59,21 +59,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //print("Clicked \(indexPath.item)")
         shoppingItemTitle = shoppingOptions[indexPath.item]
         performSegue(withIdentifier: transitionIdentifiers[indexPath.item], sender: self)
-       // let transition = transitionIdentifiers[indexPath.item]
-        
-       // let viewController = storyboard?.instantiateViewController(withIdentifier: transition)
-     //   self.navigationController?.pushViewController(viewController!, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "segueToProducts"){
             let destination: ProductsTableViewController = segue.destination as! ProductsTableViewController
             destination.title = shoppingItemTitle
-          //  let leftCartItem = UIBarButtonItem(title:)
-           
         }
         let backItem = UIBarButtonItem()
         backItem.title = "ShopMe"

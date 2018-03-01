@@ -120,7 +120,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q04-x8-iNp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1314" y="-588"/>
+            <point key="canvasLocation" x="1314" y="-650"/>
         </scene>
         <!--Products Table View Controller-->
         <scene sceneID="aFN-C3-yfJ">
@@ -206,6 +206,11 @@
                             <outlet property="delegate" destination="bDG-Hm-xbF" id="fFC-bB-oOH"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="qPL-1G-deZ" kind="show" identifier="toCart" id="Tnn-xD-Yph"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4tq-Y4-OyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -237,7 +242,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cPU-ov-odG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1314" y="814"/>
+            <point key="canvasLocation" x="985" y="997"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ejN-XQ-Dmo">
@@ -262,4 +267,7 @@
         <image name="add-button" width="256" height="256"/>
         <image name="background-home" width="1374" height="1066"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="ZVn-WF-x0S"/>
+    </inferredMetricsTieBreakers>
 </document>
