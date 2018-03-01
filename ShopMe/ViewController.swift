@@ -72,10 +72,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if (segue.identifier == "segueToProducts"){
             let destination: ProductsTableViewController = segue.destination as! ProductsTableViewController
             destination.title = shoppingItemTitle
+          //  let leftCartItem = UIBarButtonItem(title:)
+           
         }
         let backItem = UIBarButtonItem()
         backItem.title = "ShopMe"
         navigationItem.backBarButtonItem = backItem
     }
+    
 }
 
