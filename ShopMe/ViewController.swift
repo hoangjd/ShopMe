@@ -72,7 +72,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             destination.allProducts = cartItems
         }
         if (segue.identifier == "segueToCart"){
-            let destination: CartTableViewController = segue.destination as! CartTableViewController
+            let destination: CartViewController = segue.destination as! CartViewController
             destination.cartItems = cartItems
         }
         let backItem = UIBarButtonItem()

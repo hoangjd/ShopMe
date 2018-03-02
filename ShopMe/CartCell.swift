@@ -1,19 +1,19 @@
 //
-//  CartTableViewCell.swift
+//  CartCell.swift
 //  ShopMe
 //
-//  Created by Joseph Hoang on 3/1/18.
+//  Created by Joseph Hoang on 3/2/18.
 //  Copyright © 2018 Joe Hoang. All rights reserved.
 //
 
 import UIKit
 
-class CartTableViewCell: UITableViewCell {
+class CartCell: UITableViewCell {
 
-    @IBOutlet weak var decreaseButton: UIButton!
     @IBOutlet weak var increaseButton: UIButton!
-    @IBOutlet weak var priceOfItems: UILabel!
+    @IBOutlet weak var decreaseButton: UIButton!
     @IBOutlet weak var numberOfItems: UILabel!
+    @IBOutlet weak var priceOfItems: UILabel!
     @IBOutlet weak var cellItem: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
