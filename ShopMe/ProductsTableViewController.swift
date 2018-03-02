@@ -9,36 +9,11 @@
 import UIKit
 
 class ProductsTableViewController: UITableViewController {
-    
-    class AllProduct {
-        var grocerySection: [Product]?
-        var gardenSection: [Product]?
-        var movieSection:[Product]?
-        init(){
-            grocerySection = [Product]()
-            gardenSection = [Product]()
-            movieSection = [Product]()
-        }
-    }
-    
-    class Product {
-        var item: String?
-        var description: String?
-        var price: Double?
-        var amountOfProduct = 0
-        init(){
-            item = "N/A"
-            description = "N/A"
-            price = 0.0
-        }
-    }
 
-    var groceryArray: [Product] = [Product]()
-    var gardenArray: [Product] = [Product]()
-    var movieArray: [Product] = [Product]()
-    var productsAndCategories = AllProduct()
+    var allProducts: ItemsInCart = ItemsInCart()
 
-    let groceryImage: [UIImage] = [ UIImage(named:"grocery-1-tomatoes")!,
+    let groceryImage: [UIImage] = [
+                            UIImage(named:"grocery-1-tomatoes")!,
                             UIImage(named:"grocery-2-bananas")!,
                             UIImage(named:"grocery-3-gala")!,
                             UIImage(named:"grocery-4-lettuce")!,
@@ -63,10 +38,11 @@ class ProductsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createClasses()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "cart"), style: .plain, target: self, action: #selector(self.toTheCart(_sender:)))
-    //   let item = ViewController.itemChoose
+            
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "cart"), style: .plain, target: self, action: #selector(self.toTheCart(_sender:)))
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -77,62 +53,6 @@ class ProductsTableViewController: UITableViewController {
     @objc func toTheCart(_sender: UIButton) {
         performSegue(withIdentifier: "toCart", sender: self)
     }
-    
-    func createClasses(){
-        let grocery = ["tomatoes", "bananas", "gala", "lettuce", "broccoli", "milk", "bread", "eggs"]
-        let groceryDescription = ["On the vine", "Very durable", "Gala Apples", "Green leaf lettuce", "Brunch", "One box, Organic", "Whole grain", "Free range"]
-        let groceryPrice: [Double] = [2.45, 0.49, 1.47, 3.19, 1.99, 4.49, 3.49, 1.99]
-
-        let garden = ["shovel", "tomato plant", "mower", "garden soil", "fruit tree", "rake"]
-        let gardenDescription = ["Steel", "Easy to grow", "1.5 Horse Power", "Chunky", "Lemon", "For fall"]
-        let gardenPrice: [Double] = [14.99, 10.99, 150.00, 10.99, 19.99, 9.99]
-        
-        let movies = ["Shawshank Redemption", "Lord of the Rings", "Godfather"]
-        let movieDescription = ["Drama", "Sci-Fi", "Drama"]
-        let moviePrice: [Double] = [9.99, 9.99, 9.99]
-        
-        makeGroceryClass(title: grocery, descrip: groceryDescription, priceOf: groceryPrice, type: "grocery")
-        makeGroceryClass(title: garden, descrip: gardenDescription, priceOf: gardenPrice, type: "garden")
-        makeGroceryClass(title: movies, descrip: movieDescription, priceOf: moviePrice, type: "movie")
-        
-    }
-    
-    func makeGroceryClass(title: [String], descrip: [String], priceOf: [Double], type: String){
-        var i = 0
-        if type == "grocery"{
-            while i < title.count {
-                let grocery = Product()
-                grocery.item = title[i]
-                grocery.description = descrip[i]
-                grocery.price = priceOf[i]
-                groceryArray.append(grocery)
-                i = i + 1
-            }
-            productsAndCategories.grocerySection = groceryArray
-        } else if type == "garden" {
-            while i < title.count {
-                let garden = Product()
-                garden.item = title[i]
-                garden.description = descrip[i]
-                garden.price = priceOf[i]
-                gardenArray.append(garden)
-                i = i + 1
-            }
-            productsAndCategories.gardenSection = gardenArray
-        } else {
-            while i < title.count {
-                let movie = Product()
-                movie.item = title[i]
-                movie.description = descrip[i]
-                movie.price = priceOf[i]
-                movieArray.append(movie)
-                i = i + 1
-            }
-            productsAndCategories.movieSection = movieArray
-        }
-    }
-    
-
     
 
     override func didReceiveMemoryWarning() {
@@ -147,60 +67,21 @@ class ProductsTableViewController: UITableViewController {
         return 1
     }
 
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//        if self.title == "Grocery" {
-//            return groceries.count
-//        } else if self.title == "Garden" {
-//            return garden.count
-//        } else if self.title == "Movies" {
-//            return movies.count
-//        } else {
-//            return 0
-//        }
-//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if self.title == "Grocery" {
-            return groceryArray.count
+            return allProducts.grocerySection!.count
         } else if self.title == "Garden" {
-            return gardenArray.count
+            return allProducts.gardenSection!.count
         } else if self.title == "Movies" {
-            return movieArray.count
+            return allProducts.movieSection!.count
         } else {
             return 0
         }
     }
 
-    
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath) as! ProductTableViewCell
-//
-//        if self.title == "Grocery" {
-//            cell.productImage.image = groceryImage[indexPath.row]
-//            cell.productTitle.text = grocery[indexPath.row]
-//            cell.productDescription.text = groceryDescription[indexPath.row]
-//            cell.productCost.text = String(groceryPrice[indexPath.row])
-//            cell.addToCart.tag = indexPath.row
-//
-//        } else if self.title == "Garden" {
-//            cell.productImage.image = gardenImage[indexPath.row]
-//            cell.productTitle.text = garden[indexPath.row]
-//            cell.productDescription.text = gardenDescription[indexPath.row]
-//            cell.productCost.text = String(gardenPrice[indexPath.row])
-//
-//        } else if self.title == "Movies" {
-//            cell.productImage.image = movieImage[indexPath.row]
-//            cell.productTitle.text = movies[indexPath.row]
-//            cell.productDescription.text = movieDescription[indexPath.row]
-//            cell.productCost.text = String(moviePrice[indexPath.row])
-//        }
-//
-//        // Configure the cell...
-//
-//        return cell
-//    }
+
     
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -208,23 +89,28 @@ class ProductsTableViewController: UITableViewController {
         
         if self.title == "Grocery" {
             cell.productImage.image = groceryImage[indexPath.row]
-            cell.productTitle.text = groceryArray[indexPath.row].item
-            cell.productDescription.text = groceryArray[indexPath.row].description
-            cell.productCost.text = String(groceryArray[indexPath.row].price!)
+            cell.productTitle.text = allProducts.grocerySection![indexPath.row].item
+            cell.productDescription.text = allProducts.grocerySection![indexPath.row].description
+            cell.productCost.text = String(allProducts.grocerySection![indexPath.row].price!)
+
             cell.addToCart.tag = indexPath.row
             cell.addToCart.addTarget(self, action: #selector(addItemGrocery(sender:)) ,for: .touchUpInside)
+            
         } else if self.title == "Garden" {
             cell.productImage.image = gardenImage[indexPath.row]
-            cell.productTitle.text = gardenArray[indexPath.row].item
-            cell.productDescription.text = gardenArray[indexPath.row].description
-            cell.productCost.text = String(gardenArray[indexPath.row].price!)
+            cell.productTitle.text = allProducts.gardenSection![indexPath.row].item
+            cell.productDescription.text = allProducts.gardenSection![indexPath.row].description
+            cell.productCost.text = String(allProducts.gardenSection![indexPath.row].price!)
+
             cell.addToCart.tag = indexPath.row
             cell.addToCart.addTarget(self, action: #selector(addItemGarden(sender:)) ,for: .touchUpInside)
+            
         } else if self.title == "Movies" {
             cell.productImage.image = movieImage[indexPath.row]
-            cell.productTitle.text = movieArray[indexPath.row].item
-            cell.productDescription.text = movieArray[indexPath.row].description
-            cell.productCost.text = String(movieArray[indexPath.row].price!)
+            cell.productTitle.text = allProducts.movieSection![indexPath.row].item
+            cell.productDescription.text = allProducts.movieSection![indexPath.row].description
+            cell.productCost.text = String(allProducts.movieSection![indexPath.row].price!)
+
             cell.addToCart.tag = indexPath.row
             cell.addToCart.addTarget(self, action: #selector(addItemMovie(sender:)) ,for: .touchUpInside)
         }
@@ -235,23 +121,22 @@ class ProductsTableViewController: UITableViewController {
     }
     
     @objc func addItemGrocery(sender: UIButton) {
-        self.groceryArray[sender.tag].amountOfProduct =  self.groceryArray[sender.tag].amountOfProduct + 1
-        self.productsAndCategories.grocerySection![sender.tag].amountOfProduct = self.productsAndCategories.grocerySection![sender.tag].amountOfProduct + 1
-        print("\(self.groceryArray[sender.tag].amountOfProduct)")
+        self.allProducts.grocerySection![sender.tag].amountOfProduct = self.allProducts.grocerySection![sender.tag].amountOfProduct + 1
+        print("\(self.allProducts.grocerySection![sender.tag].amountOfProduct)")
     }
     
     @objc func addItemGarden(sender: UIButton) {
-        self.gardenArray[sender.tag].amountOfProduct =  self.gardenArray[sender.tag].amountOfProduct + 1
-        self.productsAndCategories.gardenSection![sender.tag].amountOfProduct = self.productsAndCategories.gardenSection![sender.tag].amountOfProduct + 1
-        print("\(self.gardenArray[sender.tag].amountOfProduct)")
+        self.allProducts.gardenSection![sender.tag].amountOfProduct = self.allProducts.gardenSection![sender.tag].amountOfProduct + 1
+        print("\(self.allProducts.gardenSection![sender.tag].amountOfProduct)")
+        
     }
     
     @objc func addItemMovie(sender: UIButton) {
-        self.movieArray[sender.tag].amountOfProduct =  self.movieArray[sender.tag].amountOfProduct + 1
-    //    self.productsAndCategories.movieSection![sender.tag].amountOfProduct = self.productsAndCategories.movieSection![sender.tag].amountOfProduct + 1
-      //  print("\(self.movieArray[sender.tag].amountOfProduct)")
-        print("\(self.productsAndCategories.movieSection![sender.tag].amountOfProduct)")
+        self.allProducts.movieSection![sender.tag].amountOfProduct = self.allProducts.movieSection![sender.tag].amountOfProduct + 1
+        print("\(self.allProducts.movieSection![sender.tag].amountOfProduct)")
+        
     }
+    
     
     
 

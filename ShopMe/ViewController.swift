@@ -12,6 +12,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     @IBOutlet weak var myCollectionView: UICollectionView!
     
+    let cartItems = ItemsInCart()
+    
     let shoppingOptions = ["Recent Orders", "Cart", "Grocery", "Clothing", "Movies", "Garden", "Electronics", "Books", "Appliances", "Toys"]
     var shoppingItemTitle = ""
     
@@ -67,6 +69,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if (segue.identifier == "segueToProducts"){
             let destination: ProductsTableViewController = segue.destination as! ProductsTableViewController
             destination.title = shoppingItemTitle
+            destination.allProducts = cartItems
+        }
+        if (segue.identifier == "segueToCart"){
+            let destination: CartTableViewController = segue.destination as! CartTableViewController
+            destination.cartItems = cartItems
         }
         let backItem = UIBarButtonItem()
         backItem.title = "ShopMe"
