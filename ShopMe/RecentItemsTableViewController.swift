@@ -8,10 +8,11 @@
 
 import UIKit
 
-class RecentItemsTableViewController: UITableViewController {
+class RecentItemsTableViewController: UITableViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title = "Recent Orders"
 
         // Uncomment the following line to preserve selection between presentations

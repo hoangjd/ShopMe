@@ -12,6 +12,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     @IBOutlet weak var myCollectionView: UICollectionView!
     
+    let cartItems = ItemsInCart()
+    
     let shoppingOptions = ["Recent Orders", "Cart", "Grocery", "Clothing", "Movies", "Garden", "Electronics", "Books", "Appliances", "Toys"]
     var shoppingItemTitle = ""
     
@@ -59,23 +61,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //print("Clicked \(indexPath.item)")
         shoppingItemTitle = shoppingOptions[indexPath.item]
         performSegue(withIdentifier: transitionIdentifiers[indexPath.item], sender: self)
-       // let transition = transitionIdentifiers[indexPath.item]
-        
-       // let viewController = storyboard?.instantiateViewController(withIdentifier: transition)
-     //   self.navigationController?.pushViewController(viewController!, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "segueToProducts"){
             let destination: ProductsTableViewController = segue.destination as! ProductsTableViewController
             destination.title = shoppingItemTitle
+            destination.allProducts = cartItems
+        }
+        if (segue.identifier == "segueToCart"){
+            let destination: CartViewController = segue.destination as! CartViewController
+            destination.cartItems = cartItems
         }
         let backItem = UIBarButtonItem()
         backItem.title = "ShopMe"
         navigationItem.backBarButtonItem = backItem
     }
+    
 }
 
