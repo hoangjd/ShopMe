@@ -121,12 +121,12 @@
 				D88417232044A632005BD749 /* Info.plist */,
 				D89647E1204721850084ED97 /* RecentItemsTableViewController.swift */,
 				D89647E3204721E20084ED97 /* ProductsTableViewController.swift */,
+				D83B7DDA204911A500F0C40C /* CartViewController.swift */,
 				D83B7DCE204744B400F0C40C /* ProductTableViewCell.swift */,
 				D88417492044BA06005BD749 /* ShoppingCell.swift */,
+				D83B7DDC2049146900F0C40C /* CartCell.swift */,
 				D83B7DD420488FFB00F0C40C /* ItemsInCart.swift */,
 				D83B7DD62048901C00F0C40C /* Product.swift */,
-				D83B7DDA204911A500F0C40C /* CartViewController.swift */,
-				D83B7DDC2049146900F0C40C /* CartCell.swift */,
 			);
 			path = ShopMe;
 			sourceTree = "<group>";

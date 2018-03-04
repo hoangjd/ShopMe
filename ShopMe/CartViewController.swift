@@ -29,6 +29,9 @@ class CartViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     // create our 1d array
     func createSections() -> [String] {
+        isGrocery = false
+        isGarden = false
+        isMovie = false
         var sections = [String]()
         if cartItems.howManyItemsinGrocery() > 0 {
             sections.append("Grocery")
@@ -122,8 +125,7 @@ class CartViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return titleOfSections.count
     }
     // get titles of sections
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        //logic for finding title
+    func headerTitleForTableView (section: Int) -> String {
         if section == 0{
             if isGrocery {
                 indexOfSectionGrocery = 0
@@ -143,10 +145,15 @@ class CartViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 indexOfSectionMovie = 1
                 return "Movie"
             }
-        } else {
+        } else if section == 2{
             indexOfSectionMovie = 2
             return "Movie"
         }
+        return "error"
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        //logic for finding title
+       return headerTitleForTableView(section: section)
         
     }
     
@@ -168,29 +175,40 @@ class CartViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "theCartCell", for: indexPath) as! CartCell
-        print("\(itemsInSection)")
-        print("\(titleOfSections)")
+//        print("\(itemsInSection)")
+//        print("\(titleOfSections)")
         let category: String = titleOfSections[indexPath.section]
+     //   print("\(category)")
         let theItem: String = itemsInSection[indexPath.section][indexPath.row]
-        var itemNumber: Int = numberOfItems(catIdentifier: category, itemIdentifier: theItem, itemsToSearch: cartItems)
-        var itemPrice: Double = itemPricing(number: itemNumber, catIdentifier: category, itemIdentifier: theItem, itemsToSearch: cartItems)
-        var total = Double(itemNumber) * itemPrice
+     //   print("\(theItem)")
+     //   print()
+        let itemNumber: Int = numberOfItems(catIdentifier: category, itemIdentifier: theItem, itemsToSearch: cartItems)
+        let itemPrice: Double = itemPricing(number: itemNumber, catIdentifier: category, itemIdentifier: theItem, itemsToSearch: cartItems)
+        let total = Double(itemNumber) * itemPrice
         
         cell.cellItem.text = theItem
         cell.numberOfItems.text = String(itemNumber)
         cell.priceOfItems.text = String(total)
         
         if category == "Grocery"{
+            
+            clearButtonConnections(ourCell: cell)
+            cell.decreaseButton.removeTarget(nil, action: nil, for: .allEvents)
+            cell.increaseButton.removeTarget(nil, action: nil, for: .allEvents)
             cell.decreaseButton.tag = indexPath.row
             cell.decreaseButton.addTarget(self, action: #selector(subItemGrocery(sender:)) ,for: .touchUpInside)
+
             cell.increaseButton.tag = indexPath.row + 20
             cell.increaseButton.addTarget(self, action: #selector(addItemGrocery(sender:)) ,for: .touchUpInside)
         } else if category == "Garden"{
+            clearButtonConnections(ourCell: cell)
             cell.decreaseButton.tag = indexPath.row + 40
             cell.decreaseButton.addTarget(self, action: #selector(subItemGarden(sender:)) ,for: .touchUpInside)
             cell.increaseButton.tag = indexPath.row + 60
             cell.increaseButton.addTarget(self, action: #selector(addItemGarden(sender:)) ,for: .touchUpInside)
-        } else {
+
+        } else if category == "Movie"{
+            clearButtonConnections(ourCell: cell)
             cell.decreaseButton.tag = indexPath.row + 80
             cell.decreaseButton.addTarget(self, action: #selector(subItemMovie(sender:)) ,for: .touchUpInside)
             cell.increaseButton.tag = indexPath.row + 100
@@ -201,13 +219,21 @@ class CartViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
+    
+    //Functions for increase and decrease functionality---------------------------------------
     //to -1 grocery
+    func clearButtonConnections(ourCell: CartCell) {
+        ourCell.decreaseButton.removeTarget(nil, action: nil, for: .allEvents)
+        ourCell.increaseButton.removeTarget(nil, action: nil, for: .allEvents)
+    }
+    
     @objc func subItemGrocery(sender: UIButton) {
         
         //this line tells the index of the item to be decremented in our table
         let index = searchForGroceryItem(theItem:self.itemsInSection[indexOfSectionGrocery!][sender.tag])
         if cartItems.grocerySection![index].amountOfProduct > 0 {
             cartItems.grocerySection![index].amountOfProduct = cartItems.grocerySection![index].amountOfProduct - 1
+            print("data reloded")
             self.cartTableView.reloadData()
         }
     }
@@ -223,7 +249,6 @@ class CartViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @objc func subItemGarden(sender: UIButton) {
-        
         //this line tells the index of the item to be decremented in our table
         let index = searchForGardenItem(theItem:self.itemsInSection[indexOfSectionGarden!][sender.tag-40])
         if cartItems.gardenSection![index].amountOfProduct > 0 {
@@ -243,7 +268,6 @@ class CartViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @objc func subItemMovie(sender: UIButton) {
-        
         //this line tells the index of the item to be decremented in our table
         let index = searchForMovieItem(theItem:self.itemsInSection[indexOfSectionMovie!][sender.tag-80])
         if cartItems.movieSection![index].amountOfProduct > 0 {
@@ -294,6 +318,8 @@ class CartViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         return 0
     }
+    
+    //Functions for increase and decrease functionality end here-------------------------------------
     
     //find price of item
     func itemPricing(number: Int, catIdentifier: String, itemIdentifier: String, itemsToSearch: ItemsInCart) -> (Double) {
